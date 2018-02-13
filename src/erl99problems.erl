@@ -25,7 +25,10 @@ p01([_H|T]) ->
 %%%    > [f,g]
 %%% @end
 
-%--- delete this line and write your code for p02 here ---%
+p02([P|[X|[]]])->
+	C = [P, X],
+	C;
+p02([_|L])->p02(L).
 
 %%% @doc p03 Find the K'th element of a list
 %%% eg
