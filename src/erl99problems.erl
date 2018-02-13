@@ -14,10 +14,8 @@
 %%%    > 4
 %%% @end
 
-p01([T|[]]) ->
-    T;
-p01([_H|T]) ->
-    p01(T).
+p01([T|[]]) -> T;
+p01([_H|T]) -> p01(T).
 
 %%% @doc p02 Find the last but one box of a list.
 %%% eg
@@ -25,10 +23,10 @@ p01([_H|T]) ->
 %%%    > [f,g]
 %%% @end
 
-p02([P|[X|[]]])->
+p02([P|[X|[]]]) ->
 	C = [P, X],
 	C;
-p02([_|L])->p02(L).
+p02([_|L]) -> p02(L).
 
 %%% @doc p03 Find the K'th element of a list
 %%% eg
@@ -36,7 +34,10 @@ p02([_|L])->p02(L).
 %%%     > f
 %%% @end
 
-%--- delete this line and write your code for p03 here ---%
+p03([H | _], 1) -> H;
+p03([_|T], I) -> p03(T, I-1).
+
+
 
 %%% @doc p04 Find the number of elements of a list.
 %%% eg
@@ -44,7 +45,11 @@ p02([_|L])->p02(L).
 %%%     > 6
 %%% @end
 
-%--- delete this line and write your code for p04 here ---%
+
+p04([_|[]], C) -> C;
+p04([_|T], C) -> p04(T, C+1).
+p04([]) -> 0;
+p04(L) -> p04(L, 1).
 
 %%% @doc p05 Reverse a list.
 %%% eg
@@ -52,7 +57,11 @@ p02([_|L])->p02(L).
 %%%     > [4,3,2,z,1]
 %%% @end
 
-%--- delete this line and write your code for p05 here ---%
+p05(L) -> p05(L, []).
+p05([], L) -> L;
+p05([H | T], L) -> 
+	L,	
+	p05(T, [H | L]).
 
 %%% @doc p06 Find out whether a list is a palindrome.
 %%% eg
@@ -62,7 +71,13 @@ p02([_|L])->p02(L).
 %%%     > false
 %%% @end
 
-%--- delete this line and write your code for p06 here ---%
+p06(L) ->
+	p06(L, p05(L)).
+p06([],[])->true;
+p06([H|T], [H1|T1]) ->
+	if H == H1 -> p06(T,T1)
+	end;
+p06([H|[]], [H1|[]]) -> true.
 
 %%% @doc p07 Flatten a nested list structure
 %%% eg
