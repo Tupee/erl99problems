@@ -24,8 +24,7 @@ p01([_H|T]) -> p01(T).
 %%% @end
 
 p02([P|[X|[]]]) ->
-	C = [P, X],
-	C;
+	[P, X];
 p02([_|L]) -> p02(L).
 
 %%% @doc p03 Find the K'th element of a list
@@ -34,6 +33,7 @@ p02([_|L]) -> p02(L).
 %%%     > f
 %%% @end
 
+p03([], _) -> undefined;
 p03([H | _], 1) -> H;
 p03([_|T], I) -> p03(T, I-1).
 
@@ -71,12 +71,10 @@ p05([H | T], L) ->
 %%%     > false
 %%% @end
 
-p06(L) ->
-	p06(L, p05(L)).
-p06([],[]) ->true;
-p06([H|T], [H1|T1]) ->
-	if H == H1 -> p06(T,T1)
-	end;
+p06(L) -> p06(L, p05(L)).
+p06([],[]) -> true;
+p06([H|T], [H|T1]) -> p06(T,T1);
+p06(_,_) -> false;
 p06([H|[]], [H1|[]]) -> true.
 
 %%% @doc p07 Flatten a nested list structure
@@ -84,8 +82,11 @@ p06([H|[]], [H1|[]]) -> true.
 %%%     erl99problems:p07([a,[b,[c,d],e]]).
 %%%     > [a,b,c,d,e]
 %%% @end
-
-%--- delete this line and write your code for p07 here ---%
+	  
+p07([]) ->[];
+p07([[]|T]) -> p07(T);
+p07([[H|T]|T2]) ->p07([H|[T|T2]]);
+p07([H|T]) ->[H|p07(T)].
 
 %%% @doc p08 Eliminate consecutive duplicates of list elements.
 %%% eg
@@ -93,7 +94,17 @@ p06([H|[]], [H1|[]]) -> true.
 %%%     > [a,b,c,d,e]
 %%% @end
 
-%--- delete this line and write your code for p08 here ---%
+p081(X, []) -> X;
+p081(H, [H|T]) -> [];
+p081(X, [H|T]) -> p081(X, T).
+
+p08([])->[];
+p08([H|T])->p08(H, T, []).
+
+p08([], [], L) -> p05(p07(L));
+p08(H, [], L) ->p08([], [], [H|L]);
+p08(H, [H1|T], L) ->p08(H1, T, [p081(H, [H1|T])|L]).
+
 
 %%% @doc p09 Pack consecutive duplicates of list elements into sublists.
 %%% eg

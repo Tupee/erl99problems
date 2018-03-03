@@ -36,3 +36,12 @@ p03_test() ->
 		_ ->
 			{skipped, {abort, func_for_test_not_yet_implemented}}
 	end.
+
+p04_test() ->
+	case erlang:function_exported(?TM, ?TF, 1) of
+		true->
+		?assertEqual(1, ?TM:p04(1)),
+		?assertEqual(2, ?TM:p04([1,2]));
+		_ ->
+			{skipped, {abort, func_for_test_not_yet_implemented}}
+		end.
